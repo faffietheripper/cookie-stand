@@ -66,6 +66,7 @@ SalmonCookies.prototype.render = function () {
     ul.appendChild(li);
   }
 */
+
   // table
   const table = document.getElementById("myTable");
 
@@ -75,15 +76,24 @@ SalmonCookies.prototype.render = function () {
 
   // table cell
   let td = document.createElement("td");
-  td.textContent = this.name;
+  td.textContent = this.shopName;
   tr.appendChild(td);
+
+  let total = 0;
 
   // get data into the row
   for (let i = 0; i < this.cookiesPerHour.length; i++) {
     td = document.createElement("td");
     td.textContent = this.cookiesPerHour[i];
     tr.appendChild(td);
+
+    total = total + this.cookiesPerHour[i];
   }
+
+  // total cell
+  td = document.createElement("td");
+  td.textContent = total;
+  tr.appendChild(td);
 };
 
 function makeHeaderRow() {
@@ -103,6 +113,11 @@ function makeHeaderRow() {
     th.textContent = hours[i];
     tr.appendChild(th);
   }
+
+  // total cell
+  th = document.createElement("th");
+  th.textContent = "Totals";
+  tr.appendChild(th);
 }
 
 makeHeaderRow();
@@ -113,125 +128,79 @@ const dubai = new SalmonCookies("Dubai", 11, 38, 3.7);
 const paris = new SalmonCookies("Paris", 20, 38, 2.3);
 const lima = new SalmonCookies("Lima", 2, 16, 4.6);
 
-seattle.render();
-tokyo.render();
-dubai.render();
-paris.render();
-lima.render();
+//const stores = [seattle, tokyo, dubai, paris, lima];
 
-// Table time !!!
-// const table = document.createElement("table");
-//   article.appendChild(table);
+const stores = [seattle, tokyo, dubai, paris, lima];
 
-//   // hedaer row
-//   const headerRow = document.createElement("tr");
-//   table.appendChild(headerRow);
-
-//   // add header cells
-//   const kidsHeaderCell = document.createElement("th");
-//   const dogsHeaderCell = document.createElement("th");
-//   const catsHeaderCell = document.createElement("th");
-
-//   kidsHeaderCell.textContent = "Kids";
-//   dogsHeaderCell.textContent = "Dogs";
-//   catsHeaderCell.textContent = "Cats";
-
-//   headerRow.appendChild(kidsHeaderCell);
-//   headerRow.appendChild(dogsHeaderCell);
-//   headerRow.appendChild(catsHeaderCell);
-
-//   // add data row
-//   const dataRow = document.createElement("tr");
-//   tableElem.appendChild(dataRow);
-
-//   // add data cells
-//   const kidsDataCell = document.createElement("td");
-//   const dogsDataCell = document.createElement("td");
-//   const catsDataCell = document.createElement("td");
-
-//   kidsDataCell.textContent = this.goodWithKids;
-//   dogsDataCell.textContent = this.goodWithDogs;
-//   catsDataCell.textContent = this.goodWithCats;
-
-//   dataRow.appendChild(kidsDataCell);
-//   dataRow.appendChild(dogsDataCell);
-//   dataRow.appendChild(catsDataCell);
-
-/*
-const tokyo = {
-  name: "Tokyo",
-  minCust: 3,
-  maxCust: 24,
-  avgSale: 1.2,
-  custPerHour: [],
-  getCustPerHour: function () {
-    for (let i = 0; i < hours.length; i++) {
-      let numCusts = randomNum(this.minCust, this.maxCust);
-      this.custPerHour.push(numCusts);
-    }
-  },
-};
-
-tokyo.getCustPerHour();
-function randomNum(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+for (let i = 0; i < stores.length; i++) {
+  stores[i].render();
 }
 
-const dubai = {
-  name: "Dubai",
-  minCust: 11,
-  maxCust: 38,
-  avgSale: 3.7,
-  custPerHour: [],
-  getCustPerHour: function () {
-    for (let i = 0; i < hours.length; i++) {
-      let numCusts = randomNum(this.minCust, this.maxCust);
-      this.custPerHour.push(numCusts);
+// bottom totals row code
+function totalRow() {
+  // table
+  const table = document.getElementById("myTable");
+
+  // table row
+  const tr = document.createElement("tr");
+  table.appendChild(tr);
+
+  // table cell
+  let td = document.createElement("td");
+  td.textContent = "Totals";
+  tr.appendChild(td);
+  let fullTotal = 0;
+  // loop round every hour to get each hours total
+  for (let i = 0; i < hours.length; i++) {
+    let hourlyTotal = 0;
+
+    // loop through each store to help get the hours total
+    for (let k = 0; k < stores.length; k++) {
+      hourlyTotal = hourlyTotal + stores[k].cookiesPerHour[i];
     }
-  },
-};
 
-dubai.getCustPerHour();
-function randomNum(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+    // hoursly total cell
+    let td = document.createElement("td");
+    td.textContent = hourlyTotal;
+    tr.appendChild(td);
+
+    fullTotal = fullTotal + hourlyTotal;
+  }
+
+  // total total
+  td = document.createElement("td");
+  td.textContent = fullTotal;
+  tr.appendChild(td);
 }
+totalRow();
 
-const paris = {
-  name: "Paris",
-  minCust: 20,
-  maxCust: 38,
-  avgSale: 2.3,
-  custPerHour: [],
-  getCustPerHour: function () {
-    for (let i = 0; i < hours.length; i++) {
-      let numCusts = randomNum(this.minCust, this.maxCust);
-      this.custPerHour.push(numCusts);
-    }
-  },
-};
+//Event listeners ... Form
 
-paris.getCustPerHour();
-function randomNum(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+const submitButtonEl = document.getElementById("new-store-form");
 
-const lima = {
-  name: "Lima",
-  minCust: 2,
-  maxCust: 16,
-  avgSale: 4.6,
-  custPerHour: [],
-  getCustPerHour: function () {
-    for (let i = 0; i < hours.length; i++) {
-      let numCusts = randomNum(this.minCust, this.maxCust);
-      this.custPerHour.push(numCusts);
-    }
-  },
-};
+submitButtonEl.addEventListener("submit", function (event) {
+  event.preventDefault();
 
-lima.getCustPerHour();
-function randomNum(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+  const storeNameInput = event.target.name.value;
+  const maxCustInput = event.target.maxCust.value;
+  const minCustInput = event.target.minCust.value;
+  const avgCookiesInput = event.target.avgCookies.value;
 
-*/
+  console.log(storeNameInput);
+  console.log(maxCustInput);
+  console.log(minCustInput);
+  console.log(avgCookiesInput);
+
+  submitButtonEl.reset();
+
+  const newStore = new SalmonCookies(
+    storeNameInput,
+    minCustInput,
+    maxCustInput,
+    avgCookiesInput
+  );
+
+  console.log(newStore);
+  newStore.render();
+});
+

@@ -1,11 +1,25 @@
-
-
 body {
   background-color: salmon;
   color: white;
   font-family: monospace;
+  display: flex;
+  justify-content: center;
 }
 
 #myTable {
-border: 10px solid antiquewhite;
+  border: 10px solid antiquewhite;
+  padding: 30px;
+}
+
+input {
+  display: block;
+}
+
+form {
+  width: fit-content;
+  margin-top: 50px;
+}
+
+button {
+  margin-top: 20px;
 }

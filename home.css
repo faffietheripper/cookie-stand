@@ -1,0 +1,38 @@
+body {
+  background-color: antiquewhite;
+}
+
+.header-container {
+  background-color: teal;
+  display: flex;
+  margin: 10px auto;
+}
+h1 {
+  margin-left: 10px;
+}
+
+nav {
+  display: flex;
+  width: 75%;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.main-container {
+  width: 90%;
+  background-color: salmon;
+  margin: 20px auto;
+}
+tr:hover {background-color: teal;}
+h2 {
+  display: block;
+  text-align: center;
+}
+
+.hero-image{
+  width: 100%;
+}
+
+.footer-container{
+  background-color: teal;
+}
